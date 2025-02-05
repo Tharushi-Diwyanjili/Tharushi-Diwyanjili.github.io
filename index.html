@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Appointment System</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #63a69f, #6b8e23);
+            margin: 0;
+        }
+        #appointment-container {
+            width: 350px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 24px;
+        }
+        input, select {
+            width: 90%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        button {
+            padding: 12px 18px;
+            border: none;
+            background: #63a69f;
+            color: #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #6b8e23;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+        li {
+            background: #f4f4f4;
+            padding: 12px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 8px;
+            transition: transform 0.2s;
+        }
+        li:hover {
+            transform: scale(1.05);
+        }
+        .completed {
+            text-decoration: line-through;
+            color: gray;
+        }
+        .remove-btn {
+            background: crimson;
+            padding: 5px 10px;
+            border-radius: 50%;
+            color: #fff;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background 0.3s;
+        }
+        .remove-btn:hover {
+            background: darkred;
+        }
+    </style>
+</head>
+<body>
+    <div id="appointment-container">
+        <h2>🩺 Book an Appointment</h2>
+        <input type="text" id="patientName" placeholder="Patient's Name">
+        <input type="tel" id="patientPhone" placeholder="Phone Number">
+        <select id="doctorSelect">
+            <option value="Dr. Smith">Dr. Smith</option>
+            <option value="Dr. Jones">Dr. Jones</option>
+            <option value="Dr. Lee">Dr. Lee</option>
+        </select>
+        <input type="date" id="appointmentDate">
+        <button onclick="addAppointment()">Book Appointment</button>
+        <ul id="appointmentList"></ul>
+    </div>
+
+    <script>
+        function addAppointment() {
+            let name = document.getElementById("patientName").value.trim();
+            let phone = document.getElementById("patientPhone").value.trim();
+            let doctor = document.getElementById("doctorSelect").value;
+            let date = document.getElementById("appointmentDate").value;
+
+            if (name === "" || phone === "" || date === "") return;
+
+            let li = document.createElement("li");
+            li.innerHTML = `<span onclick="toggleAppointment(this)">${name} - ${doctor} on ${date}</span> <span class="remove-btn" onclick="removeAppointment(this)">X</span>`;
+            document.getElementById("appointmentList").appendChild(li);
+
+            // Reset form after submission
+            document.getElementById("patientName").value = "";
+            document.getElementById("patientPhone").value = "";
+            document.getElementById("appointmentDate").value = "";
+        }
+
+        function toggleAppointment(element) {
+            element.classList.toggle("completed");
+        }
+
+        function removeAppointment(button) {
+            button.parentElement.remove();
+        }
+    </script>
+</body>
+</html>
